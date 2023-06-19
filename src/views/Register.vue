@@ -1,7 +1,11 @@
 <script>
 import Z from "webfontloader";
+import Navregister from "@/layouts/default/Navregister.vue";
 
 export default {
+  components: {
+    Navregister
+  },
   data: () => ({
     isFormValid: false,
     valid: false,
@@ -76,67 +80,74 @@ export default {
 </script>
 
 <template>
-  <v-form v-model="isFormValid" @submit.prevent="submit">
-    <v-container>
-      <v-row>
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="username"
-            :rules="nameRules"
-            label="Username"
-            required
-          ></v-text-field>
-        </v-col>
+  <div class="bg-orange w-50 h-75 ma-16">
+    <navregister/>
 
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="E-mail"
-            required
-          ></v-text-field>
-        </v-col>
+<v-sheet max-width="400" class="mx-auto mt-30" style="border: 2px solid black">
+<v-form v-model="isFormValid" @submit.prevent="submit">
+    <v-text-field
+      v-model="username"
+      :rules="nameRules"
+      label="Username"
+      required
+    ></v-text-field>
+  
+    <v-text-field
+      v-model="email"
+      :rules="emailRules"
+      label="E-mail"
+      required
+    ></v-text-field>
 
-        <v-col cols="12" md="4">
-          <v-text-field
-            :type="seePassword ? 'text' : 'password'"
-            :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="seePassword = !seePassword"
-            v-model="password"
-            :rules="passwordRules"
-            :counter="8"
-            label="Password"
-            required
-          ></v-text-field>
-        </v-col>
+    <v-text-field
+      :type="seePassword ? 'text' : 'password'"
+      :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
+      @click:append="seePassword = !seePassword"
+      v-model="password"
+      :rules="passwordRules"
+      :counter="8"
+      label="Password"
+      required
+    ></v-text-field>
 
-        <v-col cols="12" md="4">
-          <v-text-field
-            :type="seePassword ? 'text' : 'password'"
-            @click:append="seePassword = !seePassword"
-            v-model="confirm"
-            :rules="[validateConfirmPassword]"
-            :counter="8"
-            label="Confirm password"
-            required
-          ></v-text-field>
-        </v-col>
+    <v-text-field
+      :type="seePassword ? 'text' : 'password'"
+      @click:append="seePassword = !seePassword"
+      v-model="confirm"
+      :rules="[validateConfirmPassword]"
+      :counter="8"
+      label="Confirm password"
+      required
+    ></v-text-field>
 
-        <v-btn
-          :disabled="!isFormValid"
-          :loading="loading"
-          type="submit"
-          class="mt-2"
-          text="Register"
-        ></v-btn>
-      </v-row>
-    </v-container>
+  <v-btn
+    :disabled="!isFormValid"
+    :loading="loading"
+    type="submit"
+    class="mt-2"
+    text="Register"
+  ></v-btn>
   </v-form>
+</v-sheet>
 
-  <v-sheet class="notyet" align="center">
-    <h3>Already have registration?</h3>
-    <router-link to="/login">
-      <v-btn variant="outlined" size="x-small"> Login here </v-btn>
-    </router-link>
-  </v-sheet>
+
+<v-sheet class="notyet" align="center">
+<h3>Already have registration?</h3>
+<router-link to="/login">
+<v-btn variant="outlined" size="x-small"> Login here </v-btn>
+</router-link>
+</v-sheet>
+  </div>
+ 
+ 
+
+  <div class="m-0" style="position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #e4d5eb;
+  width: 600px;
+  height: 100vh;">
+  </div>
+
 </template>
+

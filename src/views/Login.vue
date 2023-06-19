@@ -73,7 +73,7 @@
           :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="seePassword =!seePassword"
           :rules="passwordRules"
-          label="Your password."
+          label="Your password"
         ></v-text-field>
 
         <h6 style="font-size: 15px; color: indigo; cursor: pointer;">Forgot your password?</h6>
