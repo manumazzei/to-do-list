@@ -11,6 +11,7 @@ export default {
     user: "",
     email: "",
     confirm: "",
+    loading: false,
     seePassword: false,
     nameRules: [
       (user) => {

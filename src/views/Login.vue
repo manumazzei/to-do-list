@@ -1,14 +1,16 @@
 <script>
   export default {
     data: () => ({
+      isFormValid: false,
       loading: false,
-      rules: [value => vm.checkApi(value)],
       timeout: null,
+      seePassword: false,
       userName: '',
       password: '',
       form: '',
       email: '',
-      seePassword: false,
+      
+      rules: [value => vm.checkApi(value)],
       passwordRules: [
          password => {
           if (password) return true
@@ -69,7 +71,7 @@
 
 <template>
     <v-sheet max-width="300" class="mx-auto">
-      <v-form @submit.prevent="submit">
+      <v-form @submit.prevent="submit" v-model="isFormValid">
         <v-text-field
           v-model="email"
           :rules="emailRules"
@@ -87,6 +89,7 @@
 
         
           <v-btn
+          :disabled="!isFormValid"
           :loading="loading"
           type="submit"
           block
