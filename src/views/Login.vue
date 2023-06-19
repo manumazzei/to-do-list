@@ -1,13 +1,16 @@
 <script>
   export default {
     data: () => ({
+      isFormValid: false,
       loading: false,
-      rules: [value => vm.checkApi(value)],
       timeout: null,
+      seePassword: false,
       userName: '',
       password: '',
       form: '',
       email: '',
+      
+      rules: [value => vm.checkApi(value)],
       passwordRules: [
          password => {
           if (password) return true
@@ -19,7 +22,7 @@
       (email) => {
         if (email) return true;
 
-        return "E-mail is requred.";
+        return "E-mail is required.";
       },
       (email) => {
         if (/.+@.+\..+/.test(email) && !email.includes(" ")) return true;
@@ -56,15 +59,19 @@
 
             return resolve(true)
           }, 1000)
-        })
+        },
+        )
       },
     },
+    seePassword(){
+      console.log(this.password);
+    }
   }
 </script>
 
 <template>
     <v-sheet max-width="300" class="mx-auto">
-      <v-form @submit.prevent="submit">
+      <v-form @submit.prevent="submit" v-model="isFormValid">
         <v-text-field
           v-model="email"
           :rules="emailRules"
@@ -72,6 +79,9 @@
         ></v-text-field>
 
         <v-text-field
+           :type="seePassword ? 'text' : 'password'"
+           :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
+           @click:append="seePassword =!seePassword"
           v-model="password"
           :rules="passwordRules"
           label="Password"
@@ -79,7 +89,7 @@
 
         
           <v-btn
-          :disabled="!valitedForm"
+          :disabled="!isFormValid"
           :loading="loading"
           type="submit"
           block
@@ -87,8 +97,7 @@
           text="Login"
         ></v-btn>
 
-       
-        
+      
       </v-form>
         <v-sheet class="notyet" align="center"> <h3>Still not registered?</h3>
             <router-link to="/register">
