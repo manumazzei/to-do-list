@@ -1,5 +1,10 @@
 <script>
+  import Navlogin from '@/layouts/default/Navlogin.vue'
+
   export default {
+    components: {
+      Navlogin
+    },
     data: () => ({
       isFormValid: false,
       loading: false,
@@ -8,7 +13,7 @@
       password: "",
       form: "",
       email: "",
-      
+
       rules: [value => vm.checkApi(value)],
       passwordRules: [
          password => {
@@ -39,54 +44,63 @@
         
         this.loading = false
       },
+      showAlert(){
+        alert("Opção indisponível! Estamos trabalhando nisso!")
+      }
     },
   }
 </script>
 
 <template>
-    <h6 class="d-flex justify-center align-center" style="font-size: 20px; color: #5b627d" >Welcome Back!</h6>
 
-    <v-sheet max-width="300" class="mx-auto mt-30">
+    <Navlogin />
+
+    <h3 class="d-flex justify-center align-center" style="font-size: 20px; color: #5b627d; height: 80px">Welcome Back!</h3>
+
+    <v-sheet max-width="400" class="mx-auto mt-30">
       <v-form @submit.prevent="submit" v-model="isFormValid">
+        <p>Email</p>
         <v-text-field
           v-model="email"
           :rules="emailRules"
-          label="E-mail"
+          label="name@email.com"
         ></v-text-field>
 
+        <p>Password</p>
         <v-text-field
-           :type="seePassword ? 'text' : 'password'"
-           :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
-           @click:append="seePassword =!seePassword"
           v-model="password"
+          :type="seePassword ? 'text' : 'password'"
+          :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append="seePassword =!seePassword"
           :rules="passwordRules"
-          label="Password"
+          label="Your password."
         ></v-text-field>
 
-        
+        <h6 style="font-size: 15px; color: indigo; cursor: pointer;">Forgot your password?</h6>
+
           <v-btn
+          color="indigo"
           :disabled="!isFormValid"
           :loading="loading"
           type="submit"
           block
           class="mt-2"
-          text="Login"
+          text="Sign In"
         ></v-btn>
+        <div class="d-flex justify-center align-center">
+          <v-divider class="mt-4"></v-divider> <p class="mt-3 pa-2">or</p> <v-divider class="mt-4"></v-divider>
+        </div>
+
+        <v-btn variant="outlined" class="d-flex align-center justify-center w-100" @click="showAlert">
+          <v-avatar>
+            <img src="public/google-sm.png">
+          </v-avatar>
+          Continue with Google
+        </v-btn>
+
       </v-form>
-
-        <v-sheet class="notyet" align="center"> <h3>Still not registered?</h3>
-            <router-link to="/register">
-                <v-btn variant="outlined" size="x-small">
-                Register here
-                </v-btn>
-            </router-link>
-        </v-sheet>
-
     </v-sheet>
   </template>
 
   <style scoped>
-.notyet{
-    padding-top: 2rem;
-}
 </style>
