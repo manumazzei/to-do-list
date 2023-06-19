@@ -44,7 +44,9 @@
 </script>
 
 <template>
-    <v-sheet max-width="300" class="mx-auto">
+    <h6 class="d-flex justify-center align-center" style="font-size: 20px; color: #5b627d" >Welcome Back!</h6>
+
+    <v-sheet max-width="300" class="mx-auto mt-30">
       <v-form @submit.prevent="submit" v-model="isFormValid">
         <v-text-field
           v-model="email"

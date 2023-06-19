@@ -29,7 +29,7 @@ export default {
         return "Password is required.";
       },
       (password) => {
-        if (password?.length <= 8) return true;
+        if (password?.length >= 8) return true;
         return "Password must be at least 8 characters long.";
       },
       (password) => {
