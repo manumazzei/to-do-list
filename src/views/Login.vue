@@ -8,6 +8,7 @@
       password: '',
       form: '',
       email: '',
+      seePassword: false,
       passwordRules: [
          password => {
           if (password) return true
@@ -19,7 +20,7 @@
       (email) => {
         if (email) return true;
 
-        return "E-mail is requred.";
+        return "E-mail is required.";
       },
       (email) => {
         if (/.+@.+\..+/.test(email) && !email.includes(" ")) return true;
@@ -56,9 +57,13 @@
 
             return resolve(true)
           }, 1000)
-        })
+        },
+        )
       },
     },
+    seePassword(){
+      console.log(this.password);
+    }
   }
 </script>
 
@@ -72,6 +77,9 @@
         ></v-text-field>
 
         <v-text-field
+           :type="seePassword ? 'text' : 'password'"
+           :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
+           @click:append="seePassword =!seePassword"
           v-model="password"
           :rules="passwordRules"
           label="Password"
@@ -79,7 +87,6 @@
 
         
           <v-btn
-          :disabled="!valitedForm"
           :loading="loading"
           type="submit"
           block
@@ -87,8 +94,7 @@
           text="Login"
         ></v-btn>
 
-       
-        
+      
       </v-form>
         <v-sheet class="notyet" align="center"> <h3>Still not registered?</h3>
             <router-link to="/register">

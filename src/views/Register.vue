@@ -7,6 +7,7 @@ export default {
     username: "",
     password: "",
     confirm: "",
+    username: "",
     user: "",
     email: "",
     confirm: "",
@@ -57,18 +58,17 @@ export default {
   methods: {
     async submit() {
       this.loading = true;
-
-      this.user='';
+      this.username='';
       this.email= '';
       this.password = '';
       this.confirm= '';
       
 
       const message = 'Você está cadastrado!';
-      
       this.loading = false;
-
       alert(message);
+      }
+      
     },
 
     validateConfirmPassword(confirm) {
@@ -84,14 +84,13 @@ export default {
     submitForm() {
       this.form = '';
       this.password = '';
-      this.password = ''
+      this.confirm = ''
 
       this.$refs.form.resetValidation()
     },
     seePassword(){
       console.log(this.password);
     }
-  },
 };
 </script>
 
@@ -132,7 +131,9 @@ export default {
 
         <v-col cols="12" md="4">
           <v-text-field
-            type="password"
+             :type="seePassword ? 'password' : 'text'"
+            :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="seePassword =!seePassword"
             v-model="confirm"
             :rules="[validateConfirmPassword]"
             :counter="8"
