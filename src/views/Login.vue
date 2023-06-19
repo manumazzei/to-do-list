@@ -3,25 +3,23 @@
     data: () => ({
       isFormValid: false,
       loading: false,
-      timeout: null,
       seePassword: false,
-      userName: '',
-      password: '',
-      form: '',
-      email: '',
+      userName: "",
+      password: "",
+      form: "",
+      email: "",
       
       rules: [value => vm.checkApi(value)],
       passwordRules: [
          password => {
           if (password) return true
-
           return 'Password is required.'
           }, 
       ],
+
       emailRules: [
       (email) => {
         if (email) return true;
-
         return "E-mail is required.";
       },
       (email) => {
@@ -31,12 +29,7 @@
       },
     ],
     }),
-    computed: {
-      valitedForm() {
-        return this.$refs.form.validate();
 
-      }
-    },
     methods: {
       async submit () {
         this.loading = true
@@ -44,28 +37,9 @@
         this.password = ''
         this.email = ''
         
-
         this.loading = false
-
-      
-      },
-      async checkApi (userName) {
-        return new Promise(resolve => {
-          clearTimeout(this.timeout)
-
-          this.timeout = setTimeout(() => {
-            if (!userName) return resolve('Please enter a user name.')
-            if (userName === 'johnleider') return resolve('User name already taken. Please try another one.')
-
-            return resolve(true)
-          }, 1000)
-        },
-        )
       },
     },
-    seePassword(){
-      console.log(this.password);
-    }
   }
 </script>
 
@@ -96,9 +70,8 @@
           class="mt-2"
           text="Login"
         ></v-btn>
-
-      
       </v-form>
+
         <v-sheet class="notyet" align="center"> <h3>Still not registered?</h3>
             <router-link to="/register">
                 <v-btn variant="outlined" size="x-small">
@@ -106,6 +79,7 @@
                 </v-btn>
             </router-link>
         </v-sheet>
+
     </v-sheet>
   </template>
 
