@@ -87,13 +87,14 @@
           class="mt-2"
           text="Sign In"
         ></v-btn>
-        <div class="d-flex justify-center align-center">
+        
+        <div class="d-flex justify-center align-center mb-2">
           <v-divider class="mt-4"></v-divider> <p class="mt-3 pa-2">or</p> <v-divider class="mt-4"></v-divider>
         </div>
 
         <v-btn variant="outlined" class="d-flex align-center justify-center w-100" @click="showAlert">
           <v-avatar>
-            <img src="public/google-sm.png">
+            <img src="/google-sm.png">
           </v-avatar>
           Continue with Google
         </v-btn>

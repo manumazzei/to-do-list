@@ -75,30 +75,63 @@ export default {
         return true;
       }
       return "Confirm password is required.";
-    }},
+    },
+    showAlert(){
+      alert("Opção indisponível! Estamos trabalhando nisso!")
+    }
+  },
 };
 </script>
 
 <template>
-  <div class="bg-orange w-50 h-75 ma-16">
+  <div class="w-50 h-75 ml-16">
     <navregister/>
 
-<v-sheet max-width="400" class="mx-auto mt-30" style="border: 2px solid black">
-<v-form v-model="isFormValid" @submit.prevent="submit">
+    <div class="d-flex justify-center align-center w-100 mt-12" style="font-size: 30px">
+            <h5>Sign up for free</h5>
+        </div>
+
+    <div class="d-flex justify-center align-center" style="margin:10px">
+            <p>Start automating your content flow.</p>
+        </div>
+        <div class="d-flex justify-center align-center">
+            <p>One list, multiple tasks.</p>
+        </div>
+
+    <div class="d-flex justify-center align-center" style="margin: 20px">
+      <v-btn variant="outlined" class="d-flex align-center justify-center w-50" @click="showAlert">
+          <v-avatar>
+            <img src="/google-sm.png">
+          </v-avatar>
+          Continue with Google
+        </v-btn>
+    </div>
+
+    <div class="d-flex justify-center">
+      <div class="d-flex justify-center align-center w-50">
+          <v-divider class="mt-4"></v-divider> <p class="mt-3 pa-2">or</p> <v-divider class="mt-4"></v-divider>
+     </div>
+    </div>
+
+<v-sheet max-width="400" class="mx-auto mt-28">
+<v-form v-model="isFormValid" @submit.prevent="submit" style="margin-top: 30px;">
+    <p>Username</p>
     <v-text-field
       v-model="username"
       :rules="nameRules"
-      label="Username"
+      label="Create your username"
       required
     ></v-text-field>
   
+    <p>Email</p>
     <v-text-field
       v-model="email"
       :rules="emailRules"
-      label="E-mail"
+      label="Enter your email to continue"
       required
     ></v-text-field>
 
+    <p>Password</p>
     <v-text-field
       :type="seePassword ? 'text' : 'password'"
       :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -106,37 +139,34 @@ export default {
       v-model="password"
       :rules="passwordRules"
       :counter="8"
-      label="Password"
+      label="Create your password"
       required
     ></v-text-field>
 
+    <p>Confirm Password</p>
     <v-text-field
       :type="seePassword ? 'text' : 'password'"
       @click:append="seePassword = !seePassword"
       v-model="confirm"
       :rules="[validateConfirmPassword]"
       :counter="8"
-      label="Confirm password"
+      label="Confirm your password"
       required
     ></v-text-field>
 
-  <v-btn
-    :disabled="!isFormValid"
-    :loading="loading"
-    type="submit"
-    class="mt-2"
-    text="Register"
-  ></v-btn>
+    <v-btn
+          color="indigo"
+          :disabled="!isFormValid"
+          :loading="loading"
+          type="submit"
+          block
+          class="mt-2"
+          text="Sign up"
+        ></v-btn>
+
   </v-form>
 </v-sheet>
 
-
-<v-sheet class="notyet" align="center">
-<h3>Already have registration?</h3>
-<router-link to="/login">
-<v-btn variant="outlined" size="x-small"> Login here </v-btn>
-</router-link>
-</v-sheet>
   </div>
  
  
