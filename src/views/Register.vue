@@ -164,19 +164,36 @@ export default {
           text="Sign up"
         ></v-btn>
 
-  </v-form>
-</v-sheet>
-
-  </div>
+      </v-form>
+    </v-sheet>
+    </div>
  
- 
+  <div class="m-0" style="position: fixed; top: 0; right: 0; background-color: #e4d5eb; width: 600px;height: 100vh;">
+    <div style="height: 100vh;">
 
-  <div class="m-0" style="position: fixed;
-  top: 0;
-  right: 0;
-  background-color: #e4d5eb;
-  width: 600px;
-  height: 100vh;">
+     <div style="height: 200px"></div>
+      <div style="width: 600px;" class="d-flex justify-center mt-16">
+      <img src="/horacio-poeta.jpg" class="rounded-circle w-50 h-50">
+      </div>
+
+      <div class="d-inline-flex justify-center align-center">
+        <img src="/aspas.png" style="width: 120px; height: 120px" class="ml-8">
+
+          <h6 style="font-size: 25px; width:350px" class="mt-16">“He who is begun has half done.Dare to be wise; begin.”</h6>
+      </div>
+
+      <div class="d-flex justify-center mt-12">
+        <p style="font-size: 20px;">- Horace, Ancient Roman poet</p>
+      </div>
+     
+   
+  
+      
+
+    </div>
+    
+    
+   
   </div>
 
 </template>
