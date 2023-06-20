@@ -1,7 +1,11 @@
 <script>
 import Z from "webfontloader";
+import Navregister from "@/layouts/default/Navregister.vue";
 
 export default {
+  components: {
+    Navregister
+  },
   data: () => ({
     isFormValid: false,
     valid: false,
@@ -71,72 +75,126 @@ export default {
         return true;
       }
       return "Confirm password is required.";
-    }},
+    },
+    showAlert(){
+      alert("Opção indisponível! Estamos trabalhando nisso!")
+    }
+  },
 };
 </script>
 
 <template>
-  <v-form v-model="isFormValid" @submit.prevent="submit">
-    <v-container>
-      <v-row>
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="username"
-            :rules="nameRules"
-            label="Username"
-            required
-          ></v-text-field>
-        </v-col>
+  <div class="w-50 h-75 ml-16">
+    <navregister/>
 
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="E-mail"
-            required
-          ></v-text-field>
-        </v-col>
+    <div class="d-flex justify-center align-center w-100 mt-12" style="font-size: 30px">
+            <h5>Sign up for free</h5>
+        </div>
 
-        <v-col cols="12" md="4">
-          <v-text-field
-            :type="seePassword ? 'text' : 'password'"
-            :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="seePassword = !seePassword"
-            v-model="password"
-            :rules="passwordRules"
-            :counter="8"
-            label="Password"
-            required
-          ></v-text-field>
-        </v-col>
+    <div class="d-flex justify-center align-center" style="margin:10px">
+            <p>Start automating your content flow.</p>
+        </div>
+        <div class="d-flex justify-center align-center">
+            <p>One list, multiple tasks.</p>
+        </div>
 
-        <v-col cols="12" md="4">
-          <v-text-field
-            :type="seePassword ? 'text' : 'password'"
-            @click:append="seePassword = !seePassword"
-            v-model="confirm"
-            :rules="[validateConfirmPassword]"
-            :counter="8"
-            label="Confirm password"
-            required
-          ></v-text-field>
-        </v-col>
+    <div class="d-flex justify-center align-center" style="margin: 20px">
+      <v-btn variant="outlined" class="d-flex align-center justify-center w-50" @click="showAlert">
+          <v-avatar>
+            <img src="/google-sm.png">
+          </v-avatar>
+          Continue with Google
+        </v-btn>
+    </div>
 
-        <v-btn
+    <div class="d-flex justify-center">
+      <div class="d-flex justify-center align-center w-50">
+          <v-divider class="mt-4"></v-divider> <p class="mt-3 pa-2">or</p> <v-divider class="mt-4"></v-divider>
+     </div>
+    </div>
+
+<v-sheet max-width="400" class="mx-auto mt-28">
+<v-form v-model="isFormValid" @submit.prevent="submit" style="margin-top: 30px;">
+    <p>Username</p>
+    <v-text-field
+      v-model="username"
+      :rules="nameRules"
+      label="Create your username"
+      required
+    ></v-text-field>
+  
+    <p>Email</p>
+    <v-text-field
+      v-model="email"
+      :rules="emailRules"
+      label="Enter your email to continue"
+      required
+    ></v-text-field>
+
+    <p>Password</p>
+    <v-text-field
+      :type="seePassword ? 'text' : 'password'"
+      :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
+      @click:append="seePassword = !seePassword"
+      v-model="password"
+      :rules="passwordRules"
+      :counter="8"
+      label="Create your password"
+      required
+    ></v-text-field>
+
+    <p>Confirm Password</p>
+    <v-text-field
+      :type="seePassword ? 'text' : 'password'"
+      @click:append="seePassword = !seePassword"
+      v-model="confirm"
+      :rules="[validateConfirmPassword]"
+      :counter="8"
+      label="Confirm your password"
+      required
+    ></v-text-field>
+
+    <v-btn
+          color="indigo"
           :disabled="!isFormValid"
           :loading="loading"
           type="submit"
+          block
           class="mt-2"
-          text="Register"
+          text="Sign up"
         ></v-btn>
-      </v-row>
-    </v-container>
-  </v-form>
 
-  <v-sheet class="notyet" align="center">
-    <h3>Already have registration?</h3>
-    <router-link to="/login">
-      <v-btn variant="outlined" size="x-small"> Login here </v-btn>
-    </router-link>
-  </v-sheet>
+      </v-form>
+    </v-sheet>
+    </div>
+ 
+  <div class="m-0" style="position: fixed; top: 0; right: 0; background-color: #e4d5eb; width: 600px;height: 100vh;">
+    <div style="height: 100vh;">
+
+     <div style="height: 200px"></div>
+      <div style="width: 600px;" class="d-flex justify-center mt-16">
+      <img src="/horacio-poeta.jpg" class="rounded-circle w-50 h-50">
+      </div>
+
+      <div class="d-inline-flex justify-center align-center">
+        <img src="/aspas.png" style="width: 120px; height: 120px" class="ml-8">
+
+          <h6 style="font-size: 25px; width:350px" class="mt-16">“He who is begun has half done.Dare to be wise; begin.”</h6>
+      </div>
+
+      <div class="d-flex justify-center mt-12">
+        <p style="font-size: 20px;">- Horace, Ancient Roman poet</p>
+      </div>
+     
+   
+  
+      
+
+    </div>
+    
+    
+   
+  </div>
+
 </template>
+
