@@ -103,7 +103,7 @@
         </div>
 
         <div class="d-flex justify-center align-center" style="margin: 20px">
-      <v-btn variant="outlined" class="d-flex align-center justify-center w-75" @click="showAlert">
+      <v-btn variant="outlined" class="d-flex align-center justify-center w-75" @click="showAlert" disabled>
           <v-avatar>
             <img src="/google-sm.png">
           </v-avatar>
