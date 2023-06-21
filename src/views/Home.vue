@@ -29,7 +29,7 @@
     class="bg-indigo-lighten-1 text-center d-flex flex-column">
     
     <div class="pt-0">
-      You can be much more productive using our To do List! &#x1F4D3 &#x2764
+      You can be much more productive using our To do List! &#128211 &#129293
     </div>
 
   </v-footer>
