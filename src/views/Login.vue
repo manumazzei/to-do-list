@@ -81,7 +81,7 @@
           label="Your password"
         ></v-text-field>
 
-        <h6 style="font-size: 15px; color: indigo; cursor: pointer;">Forgot your password?</h6>
+        <h6 style="font-size: 15px; color: indigo; cursor: pointer;"  @click="showAlert">Forgot your password?</h6>
 
           <v-btn
           color="indigo"
