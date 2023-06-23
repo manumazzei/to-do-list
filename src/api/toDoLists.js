@@ -9,5 +9,8 @@ export const toDoListsApiMixin = {
       const res = await privateApi.post("/lists/new", title);
       return res;
     },
+    async view(listId) {
+      return await privateApi.get(`lists/${listId}`);
+    },
   },
 };
