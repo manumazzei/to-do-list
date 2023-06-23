@@ -1,7 +1,10 @@
 <script>
-  import Navlogin from '@/layouts/default/Navlogin.vue'
+  import Navlogin from '@/layouts/default/Navlogin.vue';
+  import {authApiMixin} from "@/api/auth";
+  import { setupPrivateApi } from '@/api';
 
   export default {
+    mixins: [authApiMixin],
     components: {
       Navlogin
     },
@@ -37,13 +40,22 @@
 
     methods: {
       async submit () {
-        this.loading = true
-        
-        this.password = ''
-        this.email = ''
-        
-        this.loading = false
+        const payload = {
+          email: this.email,
+          password: this.password,
+        };
+        try{
+          const {data} = await this.login(payload);
+          const { access_token } = data;
+          setupPrivateApi(access_token);
+          localStorage.setItem("access_token", access_token);
+
+          this.$router.push("/Dashboard");
+        } catch (err) {
+          alert("Algo deu errado")
+        }
       },
+
       showAlert(){
         alert("Opção indisponível! Estamos trabalhando nisso!")
       }
