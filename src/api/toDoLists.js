@@ -1,9 +1,13 @@
 import { privateApi } from "./index";
 
 export const toDoListsApiMixin = {
-    methods: {
-        async list() {
-            return await privateApi.get("/lists");
-        },
+  methods: {
+    async list() {
+      return await privateApi.get("/lists");
     },
+    async create(title) {
+      const res = await privateApi.post("/lists/new", title);
+      return res;
+    },
+  },
 };
