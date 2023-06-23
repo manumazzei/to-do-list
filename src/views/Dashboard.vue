@@ -5,7 +5,7 @@
       v-model="listTitle"
       label="Criar nova lista"
     ></v-text-field>
-    <v-btn :loading="loading">Criar</v-btn>
+    <v-btn @click="createList" :loading="loading">Criar</v-btn>
   </v-form>
 
   <v-card v-for="list in toDoLists" :key="list.id">
