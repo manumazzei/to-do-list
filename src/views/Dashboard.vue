@@ -9,7 +9,9 @@
   </v-form>
 
   <v-card v-for="list in toDoLists" :key="list.id">
-    <v-card-title>{{ list.title }}</v-card-title>
+    <router-link :to="`/list-detail/${list.id}`">
+      <v-card-title>{{ list.title }}</v-card-title>
+    </router-link>
   </v-card>
 </template>
 
