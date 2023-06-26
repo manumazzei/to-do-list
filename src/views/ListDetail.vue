@@ -9,9 +9,25 @@
     <v-btn @click="handleCreate" :loading="loading">Criar</v-btn>
   </v-form>
 
-  <div v-for="item in items" :key="item.id">
-    <h3>{{ item.title }}</h3>
-  </div>
+  <v-card v-for="item in items" :key="item.id">
+    <v-list-item @click="item.done = !item.done">
+      <template v-slot:prepend>
+        <v-checkbox-btn v-model="item.done" color="grey"></v-checkbox-btn>
+      </template>
+
+      <v-list-item-title>
+        <span :class="item.done ? 'text-grey' : 'text-primary'">{{
+          item.title
+        }}</span>
+      </v-list-item-title>
+
+      <template v-slot:append>
+        <v-expand-x-transition>
+          <v-icon v-if="item.done" color="success"> mdi-check </v-icon>
+        </v-expand-x-transition>
+      </template>
+    </v-list-item>
+  </v-card>
 </template>
 
 <script>
@@ -35,7 +51,7 @@ export default {
         const { data } = await this.view(this.listId);
         this.items = data.items;
         this.listTitle = data.title;
-      } catch (err) {   
+      } catch (err) {
         alert("Algo deu errado");
       }
     },
