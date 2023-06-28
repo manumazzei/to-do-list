@@ -12,5 +12,8 @@ export const toDoListsApiMixin = {
     async view(listId) {
       return await privateApi.get(`lists/${listId}`);
     },
+    async remove(listId) {
+      return await privateApi.delete(`/lists/${listId}`);
+    },
   },
 };
