@@ -13,7 +13,7 @@
     <v-list-item>
       <template v-slot:prepend>
         <v-checkbox-btn
-          @click="item.done = !item.done"
+          @click="updateItem(item)"
           v-model="item.done"
           color="grey"
         ></v-checkbox-btn>
@@ -94,6 +94,17 @@ export default {
       } finally {
         this.itemTitle = "";
         this.loading = false;
+      }
+    },
+    async updateItem(item) {
+      try {
+        item.done = !item.done;
+        const status = {
+          done: item.done,
+        };
+        await this.update(item.id, status);
+      } catch (err) {
+        console.log(err);
       }
     },
     async removeItem(id) {
