@@ -5,5 +5,8 @@ export const itemsApiMixin = {
     async createItem(item) {
       return await privateApi.post("/items/new", item);
     },
+    async remove(id) {
+      return await privateApi.delete(`items/${id}`)
+    }
   },
 };

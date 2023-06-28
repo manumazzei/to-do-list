@@ -10,9 +10,13 @@
   </v-form>
 
   <v-card v-for="item in items" :key="item.id">
-    <v-list-item @click="item.done = !item.done">
+    <v-list-item>
       <template v-slot:prepend>
-        <v-checkbox-btn v-model="item.done" color="grey"></v-checkbox-btn>
+        <v-checkbox-btn
+          @click="item.done = !item.done"
+          v-model="item.done"
+          color="grey"
+        ></v-checkbox-btn>
       </template>
 
       <v-list-item-title>
@@ -25,8 +29,25 @@
         <v-expand-x-transition>
           <v-icon v-if="item.done" color="success"> mdi-check </v-icon>
         </v-expand-x-transition>
+        <v-icon @click="startRemove(item.id)" color="error">
+          mdi-delete
+        </v-icon>
       </template>
     </v-list-item>
+  </v-card>
+
+  <v-card v-show="showModal">
+    <v-card-title class="font-weight-bold text-h5 text-error"
+      >Deletar</v-card-title
+    >
+    <v-card-text>Tem certeza que deseja excluir?</v-card-text>
+
+    <v-card-actions>
+      <v-btn @click="showModal = !showModal" color="error">Cancelar</v-btn>
+      <v-btn :loading="removeLoad" @click="removeItem(this.selected)"
+        >Deletar</v-btn
+      >
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -43,6 +64,9 @@ export default {
       loading: false,
       listId: this.$route.params.id,
       listTitle: "",
+      showModal: false,
+      selected: "",
+      removeLoad: false,
     };
   },
   methods: {
@@ -71,6 +95,22 @@ export default {
         this.itemTitle = "";
         this.loading = false;
       }
+    },
+    async removeItem(id) {
+      try {
+        this.removeLoad = true;
+        await this.remove(this.selected);
+        this.items = this.items.filter((item) => item.id !== id);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.showModal = false;
+        this.removeLoad = false;
+      }
+    },
+    startRemove(id) {
+      this.selected = id;
+      this.showModal = true;
     },
   },
   mounted() {
