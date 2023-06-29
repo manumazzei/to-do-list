@@ -20,7 +20,7 @@
           <v-sheet class="ml-4" style="width:75%">
           
           </v-sheet>
-          
+        <v-list-item>
       <template v-slot:append>
         <v-icon @click="startEdit(list)"> mdi-pencil </v-icon>
         <v-icon @click="startRemove(list.id)" color="error">
@@ -28,7 +28,6 @@
         </v-icon>
       </template>
     </v-list-item>
-  </v-card>
 
           <v-sheet class="d-flex justify-space-between ml-4" style="width: 10%">
             <v-icon class="mdi mdi-help-circle-outline mt-2"></v-icon>
@@ -108,7 +107,7 @@
       >
       <v-btn @click="showRemove = !showRemove">Cancelar</v-btn>
     </v-card-actions>
-  </v-card>
+
 
   <v-card v-show="showEdit">
     <v-card-title class="font-weight-bold text-h5">Editar</v-card-title>
@@ -150,7 +149,7 @@ export default {
       showRemove: false,
       selected: "",
       removeLoad: false,
-      rail: true
+      rail: true,
       editTitle: "",
       editLoad: false,
     };
