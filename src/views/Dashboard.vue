@@ -23,17 +23,20 @@
     </v-list-item>
   </v-card>
 
-  <v-card v-show="showModal">
+  <v-card v-show="showRemove">
     <v-card-title class="font-weight-bold text-h5 text-error"
       >Deletar</v-card-title
     >
     <v-card-text>Tem certeza que deseja excluir?</v-card-text>
 
     <v-card-actions>
-      <v-btn @click="showModal = !showModal" color="error">Cancelar</v-btn>
-      <v-btn :loading="removeLoad" @click="removeList(this.selected)"
+      <v-btn
+        :loading="removeLoad"
+        @click="removeList(this.selected)"
+        color="error"
         >Deletar</v-btn
       >
+      <v-btn @click="showRemove = !showRemove">Cancelar</v-btn>
     </v-card-actions>
   </v-card>
 
@@ -66,6 +69,7 @@ export default {
       loading: false,
       showModal: false,
       showEdit: false,
+      showRemove: false,
       selected: "",
       removeLoad: false,
       editTitle: "",
@@ -98,7 +102,7 @@ export default {
     },
     startRemove(id) {
       this.selected = id;
-      this.showModal = true;
+      this.showRemove = true;
     },
     async removeList(id) {
       try {
@@ -108,7 +112,7 @@ export default {
       } catch (err) {
         console.log(err);
       } finally {
-        this.showModal = false;
+        this.showRemove = false;
         this.removeLoad = false;
       }
     },
