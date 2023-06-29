@@ -29,6 +29,7 @@
         <v-expand-x-transition>
           <v-icon v-if="item.done" color="success"> mdi-check </v-icon>
         </v-expand-x-transition>
+        <v-icon @click="startEdit(item)"> mdi-pencil </v-icon>
         <v-icon @click="startRemove(item.id)" color="error">
           mdi-delete
         </v-icon>
@@ -52,6 +53,23 @@
       <v-btn @click="showRemove = !showRemove">Cancelar</v-btn>
     </v-card-actions>
   </v-card>
+
+  <v-card v-show="showEdit">
+    <v-card-title class="font-weight-bold text-h5">Editar</v-card-title>
+    <v-form @submit.prevent="editItem(this.selected)">
+      <v-text-field v-model="editTitle"></v-text-field>
+    </v-form>
+
+    <v-card-actions>
+      <v-btn @click="showEdit = !showEdit">Cancelar</v-btn>
+      <v-btn
+        :loading="editLoad"
+        @click="editItem(this.selected)"
+        color="warning"
+        >Editar</v-btn
+      >
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -70,6 +88,9 @@ export default {
       showRemove: false,
       selected: "",
       removeLoad: false,
+      showEdit: false,
+      editTitle: "",
+      editLoad: false,
     };
   },
   methods: {
@@ -125,6 +146,26 @@ export default {
     startRemove(id) {
       this.selected = id;
       this.showRemove = true;
+    },
+    startEdit(list) {
+      this.selected = list.id;
+      this.editTitle = list.title;
+      this.showEdit = true;
+    },
+    async editItem(id) {
+      try {
+        this.editLoad = true;
+        const title = {
+          title: this.editTitle,
+        };
+        await this.update(id, title);
+        this.getItems();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.showEdit = false;
+        this.editLoad = false;
+      }
     },
   },
   mounted() {
