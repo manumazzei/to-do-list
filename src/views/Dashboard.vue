@@ -15,6 +15,7 @@
       </router-link>
 
       <template v-slot:append>
+        <v-icon @click="startEdit(list)"> mdi-pencil </v-icon>
         <v-icon @click="startRemove(list.id)" color="error">
           mdi-delete
         </v-icon>
@@ -38,6 +39,23 @@
       <v-btn @click="showRemove = !showRemove">Cancelar</v-btn>
     </v-card-actions>
   </v-card>
+
+  <v-card v-show="showEdit">
+    <v-card-title class="font-weight-bold text-h5">Editar</v-card-title>
+    <v-form @submit.prevent="updateList(this.selected)">
+      <v-text-field v-model="editTitle"></v-text-field>
+    </v-form>
+
+    <v-card-actions>
+      <v-btn @click="showEdit = !showEdit">Cancelar</v-btn>
+      <v-btn
+        :loading="editLoad"
+        @click="updateList(this.selected)"
+        color="warning"
+        >Editar</v-btn
+      >
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -49,9 +67,13 @@ export default {
       toDoLists: [],
       listTitle: "",
       loading: false,
+      showModal: false,
+      showEdit: false,
       showRemove: false,
       selected: "",
       removeLoad: false,
+      editTitle: "",
+      editLoad: false,
     };
   },
   methods: {
@@ -92,6 +114,26 @@ export default {
       } finally {
         this.showRemove = false;
         this.removeLoad = false;
+      }
+    },
+    startEdit(list) {
+      this.selected = list.id;
+      this.editTitle = list.title;
+      this.showEdit = true;
+    },
+    async updateList(id) {
+      try {
+        this.editLoad = true;
+        const title = {
+          title: this.editTitle,
+        };
+        await this.update(id, title);
+        this.getLists();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.showEdit = false;
+        this.editLoad = false;
       }
     },
   },
