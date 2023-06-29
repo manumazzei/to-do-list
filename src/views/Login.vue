@@ -69,9 +69,6 @@
     <h3 class="d-flex justify-center align-center" style="font-size: 20px; color: #5b627d; height: 80px">Welcome Back!</h3>
 
    
-
-   
-
 <v-sheet max-width="400" class="mx-auto mt-28">
 <v-form v-model="isFormValid" @submit.prevent="submit" style="margin-top: 30px;">
     <v-sheet max-width="400" class="mx-auto mt-30">
