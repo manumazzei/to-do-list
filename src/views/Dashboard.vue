@@ -3,32 +3,31 @@
     <menu-dashboard @openMenu="$emit('openMenu')"></menu-dashboard>
     <left-dashboard @openMenu="$emit('openMenu')" :rail="rail"></left-dashboard>
 
-    <v-main style="background-color: whitesmoke;">
-      <v-sheet
-        style="
-          height: 900px;
-          width: 900px;
-          background-color: whitesmoke;
-        "
-      >
-        <v-form @submit.prevent="createList" class="mt-4 align-center">
-          <v-row>
-            <v-col cols="12" md="6" class="d-flex justify-space-between ml-4">
-              <v-text-field
-                :loading="loading"
-                v-model="listTitle"
-                single-line
-                hide-details
-                density="compact"
-                variant="solo"
-              >
-              </v-text-field>
-              <v-btn @click="createList" :loading="loading" color="indigo"
-                >Criar</v-btn
-              >
-            </v-col>
-          </v-row>
-        </v-form>
+    <v-main style="background-color: whitesmoke; height: 1000px;">
+
+        <p style="margin-top: -45px;background-color: #fffcdc; border: 1px solid #e9e082; font-family: Arial, Helvetica, sans-serif; 
+        height: 5%; width: 90%" class="d-flex align-center pl-8" 
+        >Welcome to To do! To get started, you'll need to create your first list. Click here to create.</p>
+     
+        <v-sheet class="d-flex justify-space-between mt-8" style="background-color: whitesmoke; width: 95%;">
+          <v-sheet class="d-inline-flex" style="background-color: whitesmoke;">
+            <h6 style="padding: 0; font-size: 30px; font-weight: 700;" class="mt-4">Lists</h6>
+            <span class="mdi mdi-format-list-checks mt-10"></span>
+          </v-sheet>
+         
+          <v-sheet class="d-flex justify-space-between mt-4" style="background-color: whitesmoke; width: 18%">
+            <v-btn class="create-btn" color="indigo" @click="startCreate()">
+              <span class="mdi mdi-plus" ></span> 
+              Create a new list</v-btn>
+              <v-btn disabled style="background-color: #B5ECC1;">
+                <v-icon style="color:#fffcdc" size="large" class="mdi mdi-playlist-plus"></v-icon>
+              </v-btn>
+          </v-sheet>
+              
+        </v-sheet>
+        
+
+       
         <v-row justify="center" class="mt-4 w-50">
           <v-col v-for="list in toDoLists" :key="list.id">
             <v-card>
@@ -51,7 +50,30 @@
             </v-card>
           </v-col>
         </v-row>
-      </v-sheet>
+     
+      <v-dialog v-model="showCreate" max-width="400px">
+        <v-card>
+          <v-form @submit.prevent="createList" class="mt-4 align-center">
+          <v-row>
+            <v-col cols="12" md="6" class="d-flex justify-space-between ml-4">
+              <v-text-field
+                :loading="loading"
+                v-model="listTitle"
+                single-line
+                hide-details
+                density="compact"
+                variant="solo"
+              >
+              </v-text-field>
+              <v-btn @click="createList" :loading="loading" color="indigo"
+                >Criar</v-btn
+              >
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-card>
+       
+      </v-dialog>
 
       <v-dialog v-model="showRemove" max-width="400px">
         <v-card>
@@ -127,6 +149,7 @@ export default {
       showEdit: false,
       showRemove: false,
       showLogOut: false,
+      showCreate: false,
       selected: "",
       removeLoad: false,
       editTitle: "",
@@ -179,6 +202,9 @@ export default {
       this.editTitle = list.title;
       this.showEdit = true;
     },
+    startCreate() {
+      this.showCreate = true;
+    },
     async updateList(id) {
       try {
         this.editLoad = true;
@@ -210,5 +236,9 @@ export default {
   font-size: 18px !important;
   font-weight: bold !important;
   margin-left: 5px !important;
+}
+.create-btn:hover {
+  background-color: white !important;
+  color: indigo !important;
 }
 </style>
