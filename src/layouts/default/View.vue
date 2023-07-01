@@ -1,9 +1,21 @@
 <template>
   <v-main>
-    <router-view />
+    <router-view @openMenu="abreMenu" :rail="rail"/>
   </v-main>
 </template>
 
-<script setup>
-  //
+<script>
+export default {
+  data() {
+    return {
+      mostraMenu: false,
+      rail: true,
+    };
+  },
+  methods: {
+    abreMenu() {
+      this.rail = !this.rail;
+    },
+  },
+};
 </script>

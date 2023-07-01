@@ -1,15 +1,26 @@
 <template>
+   <menu-dashboard></menu-dashboard>
+   <left-dashboard></left-dashboard>
+
+ <v-main style="height: 950px; background-color: whitesmoke;">
   <h2>{{ listTitle }}</h2>
-  <v-form @submit.prevent="handleCreate">
-    <v-text-field
+   <v-form @submit.prevent="handleCreate">
+    <v-col cols="12" md="6">
+       <v-text-field
       v-model="itemTitle"
       :loading="loading"
+      single-line
+      hide-details
+      density="compact"
+      variant="solo"
       label="Digite uma tarefa"
     ></v-text-field>
-    <v-btn @click="handleCreate" :loading="loading">Criar</v-btn>
+    </v-col>
+    <v-btn @click="handleCreate" :loading="loading" color="indigo">Criar</v-btn>
+
   </v-form>
 
-  <v-card v-for="item in items" :key="item.id">
+  <v-card v-for="item in items" :key="item.id" class="w-50">
     <v-list-item>
       <template v-slot:prepend>
         <v-checkbox-btn
@@ -70,14 +81,22 @@
       >
     </v-card-actions>
   </v-card>
+ </v-main> 
+ 
 </template>
 
 <script>
 import { toDoListsApiMixin } from "@/api/toDoLists";
 import { itemsApiMixin } from "@/api/items";
+import MenuDashboard from "@/components/MenuDashboard.vue";
+import LeftDashboard from "@/components/LeftDashboard.vue"
 
 export default {
   mixins: [toDoListsApiMixin, itemsApiMixin],
+  components: {
+    MenuDashboard,
+    LeftDashboard
+  },
   data() {
     return {
       items: [],

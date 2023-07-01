@@ -1,143 +1,122 @@
 <template>
-  <v-app>
-    <v-main>
-      <v-layout>
-        <v-app-bar app fixed color="white">
-          <v-btn
-            icon
-            @click="rail = !rail"
-          >
-            <v-icon color="indigo" style="font-size: 34px;">mdi-menu-open</v-icon>
-          </v-btn>
+  <div>
+    <menu-dashboard @openMenu="$emit('openMenu')"></menu-dashboard>
+    <left-dashboard @openMenu="$emit('openMenu')" :rail="rail"></left-dashboard>
 
-          <v-sheet class="d-inline-flex ml-6">
-            <router-link to="/">
-              <v-icon icon="mdi-list-box" color="indigo" style="text-decoration: none;" size="x-large" class="mt-2"/>
-            </router-link> 
-            <strong class="mt-2 ml-2" style="font-size: 25px;">To do list</strong>
-          </v-sheet>
-          
-          <v-sheet class="ml-4" style="width:75%">
-          
-          </v-sheet>
-        <v-list-item>
-      <template v-slot:append>
-        <v-icon @click="startEdit(list)"> mdi-pencil </v-icon>
-        <v-icon @click="startRemove(list.id)" color="error">
-          mdi-delete
-        </v-icon>
-      </template>
-    </v-list-item>
-
-          <v-sheet class="d-flex justify-space-between ml-4" style="width: 10%">
-            <v-icon class="mdi mdi-help-circle-outline mt-2"></v-icon>
-            <v-icon class="mdi mdi-bell-outline mt-2"></v-icon>
-            <v-avatar>
-              <v-img
-              src="/horacio-poeta.jpg"
-              contain
-              class="rounded-circle"
+    <v-main style="background-color: whitesmoke;">
+      <v-sheet
+        style="
+          height: 900px;
+          width: 900px;
+          background-color: whitesmoke;
+        "
+      >
+        <v-form @submit.prevent="createList" class="mt-4 align-center">
+          <v-row>
+            <v-col cols="12" md="6" class="d-flex justify-space-between ml-4">
+              <v-text-field
+                :loading="loading"
+                v-model="listTitle"
+                single-line
+                hide-details
+                density="compact"
+                variant="solo"
               >
-              </v-img>
-            </v-avatar>
-          </v-sheet>
+              </v-text-field>
+              <v-btn @click="createList" :loading="loading" color="indigo"
+                >Criar</v-btn
+              >
+            </v-col>
+          </v-row>
+        </v-form>
+        <v-row justify="center" class="mt-4 w-50">
+          <v-col v-for="list in toDoLists" :key="list.id">
+            <v-card>
+              <v-list-item>
+                <router-link :to="`/list-detail/${list.id}`">
+                  <v-icon
+                    icon="mdi mdi-eye-arrow-left-outline"
+                    color="indigo"
+                  ></v-icon>
+                </router-link>
+                <v-card-title>{{ list.title }}</v-card-title>
 
-        </v-app-bar>
+                <template v-slot:append>
+                  <v-icon @click="startEdit(list)">mdi-pencil</v-icon>
+                  <v-icon @click="startRemove(list.id)" color="error"
+                    >mdi-delete</v-icon
+                  >
+                </template>
+              </v-list-item>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-sheet>
 
-        <v-navigation-drawer
-          :rail="rail"
-          permanent
-        >
-          <v-list density="compact" nav>
-              <v-list-item prepend-icon="mdi-home-city" title="Home" value="home"></v-list-item>
-              <v-list-item prepend-icon="mdi-account" title="My Account" value="account"></v-list-item>
-              <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
-          </v-list>
-        </v-navigation-drawer>
+      <v-dialog v-model="showRemove" max-width="400px">
+        <v-card>
+          <v-card-title class="font-weight-bold text-h5 text-error"
+            >Deletar</v-card-title
+          >
+          <v-card-text>Tem certeza que deseja excluir?</v-card-text>
+          <v-card-actions>
+            <v-btn @click="showRemove = false">Cancelar</v-btn>
+            <v-btn
+              :loading="removeLoad"
+              @click="removeList(selected)"
+              color="error"
+              >Deletar</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
-        <v-main style="height: 1000px; background-color: whitesmoke;">
-          <v-form @submit.prevent="createList">
-            <v-text-field
-              :loading="loading"
-              v-model="listTitle"
-              label="Criar nova lista"
-            ></v-text-field>
-            <v-btn @click="createList" :loading="loading">Criar</v-btn>
-          </v-form>
-
-          <v-card v-for="list in toDoLists" :key="list.id">
-            <v-list-item>
-              <router-link :to="`/list-detail/${list.id}`">
-                <v-icon icon="mdi-checkbox-marked-circle-outline" color="indigo"></v-icon>
-              </router-link>
-              <v-card-title>{{ list.title }}</v-card-title>
-
-              <template v-slot:append>
-                <v-icon @click="startRemove(list.id)" color="error">
-                  mdi-delete
-                </v-icon>
-              </template>
-            </v-list-item>
-          </v-card>
-
-          <v-card v-show="showRemove">
-            <v-card-title class="font-weight-bold text-h5 text-error">Deletar</v-card-title>
-            <v-card-text>Tem certeza que deseja excluir?</v-card-text>
-
-            <v-card-actions>
-              <v-btn
-                :loading="removeLoad"
-                @click="removeList(this.selected)"
-                color="error"
-              >Deletar</v-btn>
-              <v-btn @click="showRemove = !showRemove">Cancelar</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-main>
-      </v-layout>
+      <v-dialog v-model="showEdit" max-width="400px">
+        <v-card>
+          <v-card-title class="font-weight-bold text-h5 text-warning"
+            >Editar</v-card-title
+          >
+          <v-card-text>
+            <v-form @submit.prevent="updateList(selected)">
+              <v-text-field
+                single-line
+                hide-details
+                density="compact"
+                variant="solo"
+                v-model="editTitle"
+              ></v-text-field>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn @click="showEdit = false">Cancelar</v-btn>
+            <v-btn
+              :loading="editLoad"
+              @click="updateList(selected)"
+              color="warning"
+              >Editar</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-main>
-  </v-app>
-  
-    <v-card-actions>
-      <v-btn
-        :loading="removeLoad"
-        @click="removeList(this.selected)"
-        color="error"
-        >Deletar</v-btn
-      >
-      <v-btn @click="showRemove = !showRemove">Cancelar</v-btn>
-    </v-card-actions>
-
-
-  <v-card v-show="showEdit">
-    <v-card-title class="font-weight-bold text-h5">Editar</v-card-title>
-    <v-form @submit.prevent="updateList(this.selected)">
-      <v-text-field v-model="editTitle"></v-text-field>
-    </v-form>
-
-    <v-card-actions>
-      <v-btn @click="showEdit = !showEdit">Cancelar</v-btn>
-      <v-btn
-        :loading="editLoad"
-        @click="updateList(this.selected)"
-        color="warning"
-        >Editar</v-btn
-      >
-    </v-card-actions>
-  </v-card>
-
+  </div>
 </template>
 
 <script>
 import { toDoListsApiMixin } from "@/api/toDoLists";
-import NavDashboard from "@/components/NavDashboard.vue";
 import MenuDashboard from "@/components/MenuDashboard.vue";
+import LeftDashboard from "@/components/LeftDashboard.vue";
 
 export default {
   mixins: [toDoListsApiMixin],
   components: {
-    NavDashboard,
-    MenuDashboard
+    MenuDashboard,
+    LeftDashboard,
+  },
+  props: {
+    rail: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -147,11 +126,12 @@ export default {
       showModal: false,
       showEdit: false,
       showRemove: false,
+      showLogOut: false,
       selected: "",
       removeLoad: false,
-      rail: true,
       editTitle: "",
       editLoad: false,
+      aparece: "",
     };
   },
   methods: {
@@ -186,7 +166,7 @@ export default {
       try {
         this.removeLoad = true;
         await this.remove(id);
-        this.toDoLists = this.toDoLists.filter((item) => item.id !== id);
+        this.toDoLists = this.toDoLists.filter((list) => list.id !== id);
       } catch (err) {
         console.log(err);
       } finally {
@@ -206,7 +186,8 @@ export default {
           title: this.editTitle,
         };
         await this.update(id, title);
-        this.getLists();
+        const updatedList = this.toDoLists.find((list) => list.id === id);
+        updatedList.title = this.editTitle;
       } catch (err) {
         console.log(err);
       } finally {
@@ -215,8 +196,19 @@ export default {
       }
     },
   },
+  computed() {
+    this.aparece = this.rail;
+  },
   mounted() {
     this.getLists();
   },
 };
 </script>
+
+<style>
+.v-list-item__title {
+  font-size: 18px !important;
+  font-weight: bold !important;
+  margin-left: 5px !important;
+}
+</style>
