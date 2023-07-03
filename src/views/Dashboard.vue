@@ -1,103 +1,88 @@
 <template>
   <div>
-    <menu-dashboard @openMenu="$emit('openMenu')"></menu-dashboard>
+    <menu-dashboard @openMenu="$emit('openMenu')" :rail="rail"></menu-dashboard>
     <left-dashboard @openMenu="$emit('openMenu')" :rail="rail"></left-dashboard>
 
     <v-main style="background-color: whitesmoke; height: 1000px;">
+      <p
+        style="margin-top: -45px;background-color: #fffcdc; border: 1px solid #e9e082; font-family: Arial, Helvetica, sans-serif; height: 5%; width: 90%"
+        class="d-flex align-center pl-8"
+      >
+        Welcome to To do! To get started, you'll need to create your first list.
+        <a @click="startCreate()" style="cursor: pointer; color: purple">Click here to create.</a>
+      </p>
 
-        <p style="margin-top: -45px;background-color: #fffcdc; border: 1px solid #e9e082; font-family: Arial, Helvetica, sans-serif; 
-        height: 5%; width: 90%" class="d-flex align-center pl-8" 
-        >Welcome to To do! To get started, you'll need to create your first list. Click here to create.</p>
-     
-        <v-sheet class="d-flex justify-space-between mt-8" style="background-color: whitesmoke; width: 95%;">
-          <v-sheet class="d-inline-flex" style="background-color: whitesmoke;">
-            <h6 style="padding: 0; font-size: 30px; font-weight: 700;" class="mt-4">Lists</h6>
-            <span class="mdi mdi-format-list-checks mt-10"></span>
-          </v-sheet>
-         
-          <v-sheet class="d-flex justify-space-between mt-4" style="background-color: whitesmoke; width: 18%">
-            <v-btn class="create-btn" color="indigo" @click="startCreate()">
-              <span class="mdi mdi-plus" ></span> 
-              Create a new list</v-btn>
-              <v-btn disabled style="background-color: #B5ECC1;">
-                <v-icon style="color:#fffcdc" size="large" class="mdi mdi-playlist-plus"></v-icon>
-              </v-btn>
-          </v-sheet>
-              
+      <v-sheet class="d-flex justify-space-between mt-8" style="background-color: whitesmoke; width: 95%">
+        <v-sheet class="d-inline-flex" style="background-color: whitesmoke;">
+          <h6 style="padding: 0; font-size: 30px; font-weight: 700;" class="mt-4">Lists</h6>
+          <span class="mdi mdi-format-list-checks mt-10"></span>
         </v-sheet>
-        
 
-       
-        <v-row justify="center" class="mt-4 w-50">
-          <v-col v-for="list in toDoLists" :key="list.id">
-            <v-card>
-              <v-list-item>
-                <router-link :to="`/list-detail/${list.id}`">
-                  <v-icon
-                    icon="mdi mdi-eye-arrow-left-outline"
-                    color="indigo"
-                  ></v-icon>
-                </router-link>
-                <v-card-title>{{ list.title }}</v-card-title>
+        <v-sheet class="d-flex justify-space-between mt-4" style="background-color: whitesmoke; width: 18%">
+          <v-btn class="create-btn" color="indigo" @click="startCreate()">
+            <span class="mdi mdi-plus"></span>
+            Create a new list
+          </v-btn>
+          <v-btn disabled style="background-color: #B5ECC1;">
+            <v-icon style="color:#fffcdc" size="large" class="mdi mdi-playlist-plus"></v-icon>
+          </v-btn>
+        </v-sheet>
+      </v-sheet>
 
-                <template v-slot:append>
-                  <v-icon @click="startEdit(list)">mdi-pencil</v-icon>
-                  <v-icon @click="startRemove(list.id)" color="error"
-                    >mdi-delete</v-icon
-                  >
-                </template>
-              </v-list-item>
-            </v-card>
-          </v-col>
-        </v-row>
-     
-      <v-dialog v-model="showCreate" max-width="400px">
-        <v-card>
-          <v-form @submit.prevent="createList" class="mt-4 align-center">
-          <v-row>
-            <v-col cols="12" md="6" class="d-flex justify-space-between ml-4">
-              <v-text-field
-                :loading="loading"
-                v-model="listTitle"
-                single-line
-                hide-details
-                density="compact"
-                variant="solo"
-              >
-              </v-text-field>
-              <v-btn @click="createList" :loading="loading" color="indigo"
-                >Criar</v-btn
-              >
-            </v-col>
-          </v-row>
-        </v-form>
+
+       <v-sheet class="mt-4 w-100 h-auto d-flex flex-wrap" style="overflow-y: auto; background-color: whitesmoke;">
+      <v-card v-for="(list, index) in toDoLists" :key="list.id" class="mt-4 ml-4 w-50">
+        <v-list-item>
+          <router-link :to="`/list-detail/${list.id}`">
+            <v-icon icon="mdi mdi-eye-arrow-left-outline" color="indigo"></v-icon>
+          </router-link>
+          <v-card-title>{{ list.title }}</v-card-title>
+
+          <template v-slot:append>
+            <v-icon @click="startEdit(list)">mdi-pencil</v-icon>
+            <v-icon @click="startRemove(list.id)" color="error">mdi-delete</v-icon>
+          </template>
+        </v-list-item>
       </v-card>
-       
+    </v-sheet>
+
+
+      <v-dialog v-model="showCreate" max-width="500px">
+        <v-card style="width: 500px; height: 180px; background-color: whitesmoke;">
+          <strong class="d-flex justify-center mt-4" style="font-family:Poppins; font-size: 20px; color: indigo"
+            >Create your list</strong
+          >
+          <v-form @submit.prevent="createList" class="d-inline-flex mt-4 align-center w-75 ml-16">
+            <v-text-field
+              :loading="loading"
+              v-model="listTitle"
+              single-line
+              hide-details
+              density="compact"
+              variant="solo"
+            ></v-text-field>
+          </v-form>
+          <v-card-actions class="d-flex justify-center align-center w-100" style="background-color: whitesmoke;">
+            <v-btn @click="showCreate = false" class="mt-4 mr-8">Cancelar</v-btn>
+            <v-btn @click="createList" :loading="loading" color="indigo" class="mt-4">Criar</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-dialog>
 
       <v-dialog v-model="showRemove" max-width="400px">
-        <v-card>
-          <v-card-title class="font-weight-bold text-h5 text-error"
-            >Deletar</v-card-title
-          >
+        <v-card style="background-color: whitesmoke;">
+          <v-card-title class="font-weight-bold text-h5 text-error">Deletar</v-card-title>
           <v-card-text>Tem certeza que deseja excluir?</v-card-text>
           <v-card-actions>
             <v-btn @click="showRemove = false">Cancelar</v-btn>
-            <v-btn
-              :loading="removeLoad"
-              @click="removeList(selected)"
-              color="error"
-              >Deletar</v-btn
-            >
+            <v-btn :loading="removeLoad" @click="removeList(selected)" color="error">Deletar</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
       <v-dialog v-model="showEdit" max-width="400px">
-        <v-card>
-          <v-card-title class="font-weight-bold text-h5 text-warning"
-            >Editar</v-card-title
-          >
+        <v-card style="background-color: whitesmoke;">
+          <v-card-title class="font-weight-bold text-h5 text-warning">Editar</v-card-title>
           <v-card-text>
             <v-form @submit.prevent="updateList(selected)">
               <v-text-field
@@ -111,12 +96,7 @@
           </v-card-text>
           <v-card-actions>
             <v-btn @click="showEdit = false">Cancelar</v-btn>
-            <v-btn
-              :loading="editLoad"
-              @click="updateList(selected)"
-              color="warning"
-              >Editar</v-btn
-            >
+            <v-btn :loading="editLoad" @click="updateList(selected)" color="warning">Editar</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -179,6 +159,7 @@ export default {
       } finally {
         this.listTitle = "";
         this.loading = false;
+        this.showCreate = false;
       }
     },
     startRemove(id) {
@@ -222,8 +203,10 @@ export default {
       }
     },
   },
-  computed() {
-    this.aparece = this.rail;
+  computed: {
+    aparece() {
+      return this.rail;
+    },
   },
   mounted() {
     this.getLists();

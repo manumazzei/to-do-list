@@ -8,14 +8,14 @@
         <router-link to="/">
           <v-icon icon="mdi-list-box" color="indigo" />
         </router-link>
-        <p><span>To do list</span></p>
+        <p style="font-family: Poppins;"><span>To do list</span></p>
       </div>
 
       <div
         class="d-flex justify-center align-center w-50 pt-14"
         style="text-decoration: none"
       >
-        <p class="mr-4" style="font-size: 20px">Don't have an account?</p>
+        <p class="mr-4" style="font-size: 18px; font-family: Poppins;">Don't have an account?</p>
         <router-link to="/register">
           <v-btn variant="text" size="medium" style="color: indigo">
             Sign up for free

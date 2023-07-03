@@ -5,7 +5,7 @@
         <v-list dense nav>
           <v-list-item
             prepend-icon="mdi-home-city"
-            title="Home"
+            title="My lists"
             value="home"
           ></v-list-item>
           <v-list-item
@@ -15,7 +15,7 @@
           ></v-list-item>
           <v-list-item
             prepend-icon="mdi-account-group-outline"
-            title="Users"
+            title="Make friends"
             value="users"
           ></v-list-item>
         </v-list>

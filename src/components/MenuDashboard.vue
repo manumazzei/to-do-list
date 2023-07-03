@@ -6,7 +6,7 @@
       </v-btn>
 
       <v-sheet class="d-inline-flex ml-6">
-        <router-link to="/">
+        <router-link to="/Dashboard">
           <v-icon
             icon="mdi-list-box"
             color="indigo"
@@ -15,7 +15,7 @@
             class="mt-2"
           />
         </router-link>
-        <strong class="mt-2 ml-2" style="font-size: 25px">To do list</strong>
+        <strong class="mt-2 ml-2" style="font-size: 25px; font-family: Poppins">To do list</strong>
       </v-sheet>
 
       <v-sheet class="ml-4" style="width: 70%"></v-sheet>
@@ -58,6 +58,7 @@
 
 <script>
 export default {
+  emits: ['openMenu'],
   props: {
     rail: {
       type: Boolean,
@@ -78,9 +79,7 @@ export default {
     },
     apareceBarra() {
       this.rail = !this.rail;
-      console.log("passei aqui");
       this.$emit("openMenu");
-      console.log("deveria ter emitido os 2");
     },
   },
 };
