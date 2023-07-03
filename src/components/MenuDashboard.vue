@@ -46,10 +46,10 @@
         <v-card-title class="font-weight-bold text-h5 text-danger"
           >Log Out</v-card-title
         >
-        <v-card-text>Tem certeza que deseja sair?</v-card-text>
+        <v-card-text>Are you sure you want to quit?</v-card-text>
         <v-card-actions>
-          <v-btn @click="showLogOut = false">Cancelar</v-btn>
-          <v-btn @click="startLogOut" color="error">Sair</v-btn>
+          <v-btn @click="showLogOut = false">Cancel</v-btn>
+          <v-btn @click="startLogOut" color="error">Log Out</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

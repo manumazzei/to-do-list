@@ -27,10 +27,15 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/Dashboard.vue'),
       },
       {
+        path: 'friends',
+        name: 'Friends',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Friends.vue'),
+      },
+      {
         path: 'list-detail/:id',
         name: 'list-detail',
         component: () => import("@/views/ListDetail.vue"),
-      }
+      },
     ],
   },
 ]

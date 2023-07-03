@@ -17,7 +17,7 @@
             class="w-75 ml-10"
           ></v-text-field>
           <v-sheet class="d-flex justify-center mt-4">
-            <v-btn @click="handleCreate" :loading="loading" color="indigo" class="create-btn" :disabled="itemTitle === ''">Criar</v-btn>
+            <v-btn @click="handleCreate" :loading="loading" color="indigo" class="create-btn" :disabled="itemTitle === ''">Create</v-btn>
           </v-sheet>
         </v-form>
       </v-card>
@@ -60,21 +60,22 @@
 
       <v-dialog v-model="showRemove" max-width="400px">
         <v-card style="background-color: whitesmoke;">
-          <v-card-title class="font-weight-bold text-h5 text-error">Deletar</v-card-title>
-          <v-card-text>Tem certeza que deseja excluir?</v-card-text>
+          <v-card-title class="font-weight-bold text-h5 text-error">Delete</v-card-title>
+          <v-card-text>Are you sure you want to delete?</v-card-text>
 
           <v-card-actions>
-            <v-btn @click="showRemove = !showRemove">Cancelar</v-btn>
-            <v-btn :loading="removeLoad" @click="removeItem(this.selected)" color="error">Deletar</v-btn>
+            <v-btn @click="showRemove = !showRemove">Cancel</v-btn>
+            <v-btn :loading="removeLoad" @click="removeItem(this.selected)" color="error">Delete</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
       <v-dialog v-model="showEdit" max-width="400px">
         <v-card style="background-color: whitesmoke;">
-          <v-card-title class="font-weight-bold text-h5 text-warning">Editar</v-card-title>
+          <v-card-title class="font-weight-bold text-h5 text-warning">Edit</v-card-title>
           <v-form @submit.prevent="editItem(this.selected)">
             <v-text-field
+              class="w-75 ml-8"
               single-line
               hide-details
               density="compact"
@@ -84,8 +85,8 @@
           </v-form>
 
           <v-card-actions>
-            <v-btn @click="showEdit = !showEdit">Cancelar</v-btn>
-            <v-btn :loading="editLoad" @click="editItem(this.selected)" color="warning">Editar</v-btn>
+            <v-btn @click="showEdit = !showEdit">Cancel</v-btn>
+            <v-btn :loading="editLoad" @click="editItem(this.selected)" color="warning">Edit</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
