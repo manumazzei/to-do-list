@@ -12,13 +12,34 @@
         <a @click="startCreate()" style="cursor: pointer; color: purple">Click here to create.</a>
       </p>
 
-      <v-sheet class="d-flex justify-space-between mt-8" style="background-color: whitesmoke; width: 95%">
-        <v-sheet class="d-inline-flex" style="background-color: whitesmoke;">
-          <h6 style="padding: 0; font-size: 30px; font-weight: 700;" class="mt-4">Lists</h6>
+      <v-sheet class="d-flex justify-space-between mt-8 h-100" style="background-color: whitesmoke; width: 95%">
+
+      
+      <v-card class="h-75 w-50 elevation-12">
+        <v-sheet class="d-inline-flex ml-12" style="font-family: Poppins;">
+          <strong style="padding: 0; font-size: 30px; font-weight: 700;" class="mt-4">Lists</strong>
           <span class="mdi mdi-format-list-checks mt-10"></span>
         </v-sheet>
 
-        <v-sheet class="d-flex justify-space-between mt-4" style="background-color: whitesmoke; width: 18%">
+        <v-sheet class="mt-4 w-100 h-75 d-flex flex-wrap justify-center" style="max-height: 75vh; overflow-y: auto;">
+          <v-card v-for="(list, index) in toDoLists" :key="list.id" class="mt-4 ml-4 w-50">
+            <v-list-item>
+              <router-link :to="`/list-detail/${list.id}`">
+                <v-icon icon="mdi mdi-eye-arrow-left-outline" color="indigo"></v-icon>
+              </router-link>
+              <v-card-title>{{ list.title }}</v-card-title>
+
+              <template v-slot:append>
+                <v-icon @click="startEdit(list)">mdi-pencil</v-icon>
+                <v-icon @click="startRemove(list.id)" color="error">mdi-delete</v-icon>
+              </template>
+            </v-list-item>
+          </v-card>
+        </v-sheet>
+
+      </v-card>
+
+      <v-sheet class="d-flex justify-space-between mt-4" style="width: 18%; background-color: whitesmoke;">
           <v-btn class="create-btn" color="indigo" @click="startCreate()">
             <span class="mdi mdi-plus"></span>
             Create a new list
@@ -27,24 +48,9 @@
             <v-icon style="color:#fffcdc" size="large" class="mdi mdi-playlist-plus"></v-icon>
           </v-btn>
         </v-sheet>
-      </v-sheet>
 
-
-       <v-sheet class="mt-4 w-100 h-auto d-flex flex-wrap" style="overflow-y: auto; background-color: whitesmoke;">
-      <v-card v-for="(list, index) in toDoLists" :key="list.id" class="mt-4 ml-4 w-50">
-        <v-list-item>
-          <router-link :to="`/list-detail/${list.id}`">
-            <v-icon icon="mdi mdi-eye-arrow-left-outline" color="indigo"></v-icon>
-          </router-link>
-          <v-card-title>{{ list.title }}</v-card-title>
-
-          <template v-slot:append>
-            <v-icon @click="startEdit(list)">mdi-pencil</v-icon>
-            <v-icon @click="startRemove(list.id)" color="error">mdi-delete</v-icon>
-          </template>
-        </v-list-item>
-      </v-card>
     </v-sheet>
+       
 
 
       <v-dialog v-model="showCreate" max-width="500px">

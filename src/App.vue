@@ -15,3 +15,9 @@
     },
   };
 </script>
+
+<style>
+   :any-link{
+        text-decoration: none;
+    }
+</style>
