@@ -43,6 +43,7 @@
         const payload = {
           email: this.email,
           password: this.password,
+          loading: true
         };
         try{
           const {data} = await this.login(payload);
@@ -64,33 +65,43 @@
 </script>
 
 <template>
-  <div class="w-50 h-75 ml-16">
+  <div class="h-100" style="background-color: whitesmoke;">
+    <div class="w-50 h-75 ml-16">
     <Navlogin/>
-    <h3 class="d-flex justify-center align-center" style="font-size: 20px; color: #5b627d; height: 80px">Welcome Back!</h3>
+    <h3 class="d-flex justify-center align-center" style="font-size: 25px; color: #5b627d; height: 80px">Welcome Back!</h3>
 
    
 <v-sheet max-width="400" class="mx-auto mt-28">
-<v-form v-model="isFormValid" @submit.prevent="submit" style="margin-top: 30px;">
-    <v-sheet max-width="400" class="mx-auto mt-30">
+<v-form v-model="isFormValid" @submit.prevent="submit" style="margin-top: 30px;background-color: whitesmoke;">
+    <v-sheet max-width="400" class="mx-auto mt-30" style="background-color: whitesmoke;">
       <v-form @submit.prevent="submit" v-model="isFormValid">
-        <p>Email</p>
+
+        <p style="font-family: Poppins;">Email</p>
         <v-text-field
+          :loading="loading"
           v-model="email"
           :rules="emailRules"
-          label="name@email.com"
+          single-line
+          hide-details
+          denstiy="compact"
+          variant="solo"
         ></v-text-field>
 
-        <p>Password</p>
+        <p class="mt-2" style="font-family: Poppins;">Password</p>
         <v-text-field
+          :loading="loading"
           v-model="password"
           :type="seePassword ? 'text' : 'password'"
           :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="seePassword =!seePassword"
           :rules="passwordRules"
-          label="Your password"
+          single-line
+          hide-details
+          denstiy="compact"
+          variant="solo"
         ></v-text-field>
 
-        <h6 style="font-size: 15px; color: indigo; cursor: pointer;"  @click="showAlert">Forgot your password?</h6>
+        <h6 class="mt-2" style="font-size: 15px; color: indigo; cursor: pointer;"  @click="showAlert">Forgot your password?</h6>
 
           <v-btn
           color="indigo"
@@ -143,6 +154,8 @@
       </div>
     </div>
   </div>
+  </div>
+  
 
 </template>
 

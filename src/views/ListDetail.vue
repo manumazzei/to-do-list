@@ -1,83 +1,116 @@
 <template>
-  <h2>{{ listTitle }}</h2>
-  <v-form @submit.prevent="handleCreate">
-    <v-text-field
-      v-model="itemTitle"
-      :loading="loading"
-      label="Digite uma tarefa"
-    ></v-text-field>
-    <v-btn @click="handleCreate" :loading="loading">Criar</v-btn>
-  </v-form>
+  <menu-dashboard @openMenu="$emit('openMenu')"></menu-dashboard>
+  <left-dashboard @openMenu="$emit('openMenu')" :rail="rail"></left-dashboard>
 
-  <v-card v-for="item in items" :key="item.id">
-    <v-list-item>
-      <template v-slot:prepend>
-        <v-checkbox-btn
-          @click="updateItem(item)"
-          v-model="item.done"
-          color="grey"
-        ></v-checkbox-btn>
-      </template>
+  <v-main style="height: 950px; background-color: whitesmoke;">
+    <v-sheet class="d-inline-flex justify-space-between w-75 h-75 ml-12" style="background-color: whitesmoke;">
+      <v-card class="w-25 h-25 elevation-12">
+        <v-sheet class="d-flex justify-center mt-4" style="font-family: Poppins; font-size: 20px">Create your items</v-sheet>
+        <v-form @submit.prevent="handleCreate" class="mt-4">
+          <v-text-field
+            v-model="itemTitle"
+            :loading="loading"
+            single-line
+            hide-details
+            density="compact"
+            variant="solo"
+            class="w-75 ml-10"
+          ></v-text-field>
+          <v-sheet class="d-flex justify-center mt-4">
+            <v-btn @click="handleCreate" :loading="loading" color="indigo" class="create-btn" :disabled="itemTitle === ''">Create</v-btn>
+          </v-sheet>
+        </v-form>
+      </v-card>
 
-      <v-list-item-title>
-        <span :class="item.done ? 'text-grey' : 'text-primary'">{{
-          item.title
-        }}</span>
-      </v-list-item-title>
+      <v-card class="w-50 ml-12 elevation-12" style="overflow-y: auto;">
+        <h2 class="d-flex justify-center align-center mt-8" style="font-family: Poppins; color: indigo">{{ listTitle }}</h2>
+        <v-card v-for="item in items" :key="item.id" style="width: 95%;" class="mt-4 ml-4">
+          <v-list-item>
+            <template v-slot:prepend>
+              <v-checkbox-btn
+                @click="updateItem(item)"
+                v-model="item.done"
+                color="grey"
+              ></v-checkbox-btn>
+            </template>
 
-      <template v-slot:append>
-        <v-expand-x-transition>
-          <v-icon v-if="item.done" color="success"> mdi-check </v-icon>
-        </v-expand-x-transition>
-        <v-icon @click="startEdit(item)"> mdi-pencil </v-icon>
-        <v-icon @click="startRemove(item.id)" color="error">
-          mdi-delete
-        </v-icon>
-      </template>
-    </v-list-item>
-  </v-card>
+            <v-list-item-title>
+              <span :class="item.done ? 'text-grey' : 'text-primary'">
+                {{ item.title }}
+              </span>
+            </v-list-item-title>
 
-  <v-card v-show="showRemove">
-    <v-card-title class="font-weight-bold text-h5 text-error"
-      >Deletar</v-card-title
-    >
-    <v-card-text>Tem certeza que deseja excluir?</v-card-text>
+            <template v-slot:append>
+              <v-expand-x-transition>
+                <v-icon v-if="item.done" color="success"> mdi-check </v-icon>
+              </v-expand-x-transition>
+              <v-icon @click="startEdit(item)"> mdi-pencil </v-icon>
+              <v-icon @click="startRemove(item.id)" color="error">mdi-delete</v-icon>
+            </template>
+          </v-list-item>
+        </v-card>
+      </v-card>
+    </v-sheet>
 
-    <v-card-actions>
-      <v-btn
-        :loading="removeLoad"
-        @click="removeItem(this.selected)"
-        color="error"
-        >Deletar</v-btn
-      >
-      <v-btn @click="showRemove = !showRemove">Cancelar</v-btn>
-    </v-card-actions>
-  </v-card>
+    <v-sheet class="w-25 h-25 pb-12" style="background-color: whitesmoke;">
+      <v-img
+        src="https://media.giphy.com/media/a2sx8GRESFjqu4fYoc/giphy-downsized-large.gif"
+        alt="GIF animado"
+      ></v-img>
 
-  <v-card v-show="showEdit">
-    <v-card-title class="font-weight-bold text-h5">Editar</v-card-title>
-    <v-form @submit.prevent="editItem(this.selected)">
-      <v-text-field v-model="editTitle"></v-text-field>
-    </v-form>
+      <v-dialog v-model="showRemove" max-width="400px">
+        <v-card style="background-color: whitesmoke;">
+          <v-card-title class="font-weight-bold text-h5 text-error">Delete</v-card-title>
+          <v-card-text>Are you sure you want to delete?</v-card-text>
 
-    <v-card-actions>
-      <v-btn @click="showEdit = !showEdit">Cancelar</v-btn>
-      <v-btn
-        :loading="editLoad"
-        @click="editItem(this.selected)"
-        color="warning"
-        >Editar</v-btn
-      >
-    </v-card-actions>
-  </v-card>
+          <v-card-actions>
+            <v-btn @click="showRemove = !showRemove">Cancel</v-btn>
+            <v-btn :loading="removeLoad" @click="removeItem(this.selected)" color="error">Delete</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="showEdit" max-width="400px">
+        <v-card style="background-color: whitesmoke;">
+          <v-card-title class="font-weight-bold text-h5 text-warning">Edit</v-card-title>
+          <v-form @submit.prevent="editItem(this.selected)">
+            <v-text-field
+              class="w-75 ml-8"
+              single-line
+              hide-details
+              density="compact"
+              variant="solo"
+              v-model="editTitle"
+            ></v-text-field>
+          </v-form>
+
+          <v-card-actions>
+            <v-btn @click="showEdit = !showEdit">Cancel</v-btn>
+            <v-btn :loading="editLoad" @click="editItem(this.selected)" color="warning">Edit</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-sheet>
+  </v-main>
 </template>
 
 <script>
 import { toDoListsApiMixin } from "@/api/toDoLists";
 import { itemsApiMixin } from "@/api/items";
+import MenuDashboard from "@/components/MenuDashboard.vue";
+import LeftDashboard from "@/components/LeftDashboard.vue";
 
 export default {
   mixins: [toDoListsApiMixin, itemsApiMixin],
+  components: {
+    MenuDashboard,
+    LeftDashboard,
+  },
+  props: {
+    rail: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       items: [],
@@ -173,3 +206,17 @@ export default {
   },
 };
 </script>
+
+<style>
+.v-list-item__title {
+  font-size: 18px !important;
+  font-weight: bold !important;
+  margin-left: 5px !important;
+}
+
+.create-btn:hover {
+  background-color: white !important;
+  color: indigo !important;
+}
+</style>
+

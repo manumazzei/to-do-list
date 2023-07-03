@@ -95,11 +95,12 @@ export default {
 </script>
 
 <template>
-  <div class="w-50 h-75 ml-16">
+<div class="h-100" style="background-color: whitesmoke;">
+    <div class="w-50 h-75 ml-16" style="background-color: whitesmoke;">
     <navregister />
 
     <div
-      class="d-flex justify-center align-center w-100 mt-12"
+      class="d-flex justify-center align-center w-100 mt-10"
       style="font-size: 30px"
     >
       <h5>Sign up for free</h5>
@@ -134,29 +135,33 @@ export default {
       </div>
     </div>
 
-    <v-sheet max-width="400" class="mx-auto mt-28">
+    <v-sheet max-width="400" class="mx-auto mt-18">
       <v-form
         v-model="isFormValid"
         @submit.prevent="submit"
-        style="margin-top: 30px"
+        style="margin-top: 30px; background-color: whitesmoke;"
       >
-        <p>Username</p>
+        <p style="font-family: Poppins;">Username</p>
         <v-text-field
           v-model="username"
           :rules="nameRules"
-          label="Create your username"
-          required
+          single-line
+          hide-details
+          denstiy="compact"
+          variant="solo"
         ></v-text-field>
 
-        <p>Email</p>
+        <p class="mt-2" style="font-family: Poppins;">Email</p>
         <v-text-field
           v-model="email"
           :rules="emailRules"
-          label="Enter your email to continue"
-          required
+          single-line
+          hide-details
+          denstiy="compact"
+          variant="solo"
         ></v-text-field>
 
-        <p>Password</p>
+        <p class="mt-2" style="font-family: Poppins;">Password</p>
         <v-text-field
           :type="seePassword ? 'text' : 'password'"
           :append-icon="seePassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -164,19 +169,23 @@ export default {
           v-model="password"
           :rules="passwordRules"
           :counter="8"
-          label="Create your password"
-          required
+          single-line
+          hide-details
+          denstiy="compact"
+          variant="solo"
         ></v-text-field>
 
-        <p>Confirm Password</p>
+        <p class="mt-2" style="font-family: Poppins;">Confirm Password</p>
         <v-text-field
           :type="seePassword ? 'text' : 'password'"
           @click:append="seePassword = !seePassword"
           v-model="confirm"
           :rules="[validateConfirmPassword]"
           :counter="8"
-          label="Confirm your password"
-          required
+          single-line
+          hide-details
+          denstiy="compact"
+          variant="solo"
         ></v-text-field>
 
         <v-btn
@@ -185,7 +194,7 @@ export default {
           :loading="loading"
           type="submit"
           block
-          class="mt-2"
+          class="mt-4"
           text="Sign up"
         ></v-btn>
       </v-form>
@@ -226,4 +235,6 @@ export default {
       </div>
     </div>
   </div>
+</div>
+  
 </template>
