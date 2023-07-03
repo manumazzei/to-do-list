@@ -146,7 +146,6 @@ export default {
           v-model="username"
           :rules="nameRules"
           single-line
-          hide-details
           denstiy="compact"
           variant="solo"
         ></v-text-field>
@@ -156,7 +155,6 @@ export default {
           v-model="email"
           :rules="emailRules"
           single-line
-          hide-details
           denstiy="compact"
           variant="solo"
         ></v-text-field>
@@ -170,7 +168,6 @@ export default {
           :rules="passwordRules"
           :counter="8"
           single-line
-          hide-details
           denstiy="compact"
           variant="solo"
         ></v-text-field>
@@ -183,7 +180,6 @@ export default {
           :rules="[validateConfirmPassword]"
           :counter="8"
           single-line
-          hide-details
           denstiy="compact"
           variant="solo"
         ></v-text-field>

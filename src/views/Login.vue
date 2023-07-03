@@ -82,7 +82,6 @@
           v-model="email"
           :rules="emailRules"
           single-line
-          hide-details
           denstiy="compact"
           variant="solo"
         ></v-text-field>
@@ -96,7 +95,6 @@
           @click:append="seePassword =!seePassword"
           :rules="passwordRules"
           single-line
-          hide-details
           denstiy="compact"
           variant="solo"
         ></v-text-field>

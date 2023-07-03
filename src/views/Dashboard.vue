@@ -21,8 +21,8 @@
           <span class="mdi mdi-format-list-checks mt-10"></span>
         </v-sheet>
 
-        <v-sheet class="mt-4 w-100 h-75 d-flex flex-wrap justify-center" style="max-height: 75vh; overflow-y: auto;">
-          <v-card v-for="(list, index) in toDoLists" :key="list.id" class="mt-4 ml-4 w-50">
+        <v-sheet class="mt-4 w-100 h-75 d-flex flex-wrap justify-center" style="overflow-y: auto;">
+          <v-card v-for="(list, index) in toDoLists" :key="list.id" class="mt-4 ml-4 w-50" style="max-height: 10vh; overflow-y: auto;">
             <v-list-item>
               <router-link :to="`/list-detail/${list.id}`">
                 <v-icon icon="mdi mdi-eye-arrow-left-outline" color="indigo"></v-icon>
